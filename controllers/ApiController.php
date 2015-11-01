@@ -7,6 +7,7 @@ use app\models\Category;
 use app\models\Order;
 use app\models\Pet;
 use app\models\User;
+use machour\yii2\swagger\app\ApiException;
 use Yii;
 
 /**
@@ -28,8 +29,8 @@ use Yii;
  * @tag user Operations about user
  * @tagExternalDocs user http://swagger.io Find out more about our store
  *
- * @definition Order
  * @definition User
+ * @definition Order
  * @definition Category
  * @definition Tag
  * @definition Pet
@@ -265,13 +266,13 @@ class ApiController extends BaseApiController
      *
      * @produces application/json
      *
-     * @return object successful operation
+     * @return Map(int32) successful operation
      *
      * @security api_key
      */
     public function actionGetInventory()
     {
-        return [200 => 'blabla'];
+        return ['key' => 3, 'otherkey' => 1];
     }
 
     /**
@@ -301,6 +302,8 @@ class ApiController extends BaseApiController
      * @tag store
      *
      * @parameter int64 $orderId ID of pet that needs to be fetched
+     * @constraint minimum $orderId 1.0
+     * @constraint maximum $orderId 5.0
      * @param int $orderId
      * @return Order successful operation
      * @errors 400 Invalid ID supplied
@@ -326,6 +329,7 @@ class ApiController extends BaseApiController
      *
      * @parameter string $orderId ID of the order that needs to be deleted
      * @param string $orderId
+     * @constraint minimum $orderId 1.0
      * @errors 400 Invalid ID supplied
      * @errors 404 Order not found
      * @throws ApiException
@@ -347,7 +351,7 @@ class ApiController extends BaseApiController
      * @tag user
      *
      * @parameter User $body Created user object
-     * @return mixed successful operation
+     * @default successful operation
      */
     public function actionCreateUser()
     {
@@ -362,7 +366,7 @@ class ApiController extends BaseApiController
      * @tag user
      *
      * @parameter User[] $body List of user object
-     * @return mixed successful operation
+     * @default successful operation
      */
     public function actionCreateUsersWithArrayInput()
     {
@@ -377,7 +381,7 @@ class ApiController extends BaseApiController
      * @tag user
      *
      * @parameter User[] $body List of user object
-     * @return mixed successful operation
+     * @default successful operation
      */
     public function actionCreateUsersWithListInput()
     {
@@ -412,7 +416,7 @@ class ApiController extends BaseApiController
      * @method get
      * @tag user
      *
-     * @return string successful operation
+     * @default successful operation
      */
     public function actionLogoutUser()
     {
@@ -429,6 +433,7 @@ class ApiController extends BaseApiController
      * @parameter string $username The name that needs to be fetched. Use user1 for testing.
      * @errors 400 Invalid username supplied
      * @errors 404 User not found
+     * @return User successful operation
      */
     public function actionGetUserByName()
     {

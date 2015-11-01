@@ -25,11 +25,13 @@ class Pet extends ApiModel
     /**
      * @var string
      * @example doggie
+     * @required
      */
     public $name;
 
     /**
      * @var string[]
+     * @required
      */
     public $photoUrls;
 
